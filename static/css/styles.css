@@ -1,0 +1,44 @@
+body {
+  background: radial-gradient(circle at top left, #f2f6ff 0%, #f8fbff 35%, #ffffff 100%);
+  color: #1f2d3d;
+}
+
+.navbar {
+  background: linear-gradient(120deg, #0b5ed7, #0d6efd 60%, #0a58ca);
+}
+
+.card {
+  border-radius: 16px;
+}
+
+.stat-box {
+  background: #f7f9fc;
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid #e6ecf5;
+  min-height: 96px;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #6c7a89;
+}
+
+.map-container {
+  width: 100%;
+  height: 400px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.map-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}

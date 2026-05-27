@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title">Cargar archivo GPS</h5>
+          <p class="text-muted">Sube un CSV con las columnas: tiempo, latitud, longitud.</p>
+          <form action="{{ url_for('procesar') }}" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label class="form-label">Archivo CSV</label>
+              <input class="form-control" type="file" name="archivo" accept=".csv,text/csv" required>
+              <div class="form-text">Tamano maximo 2 MB. Solo archivos CSV.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Metodo de interpolacion</label>
+              <select class="form-select" name="metodo" required>
+                <option value="lineal">Lineal</option>
+                <option value="lagrange">Lagrange</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Cantidad de puntos interpolados</label>
+              <input class="form-range" type="range" name="num_puntos" min="100" max="5000" step="50" value="200" oninput="document.getElementById('puntosValor').textContent = this.value">
+              <div class="d-flex justify-content-between">
+                <small class="text-muted">100</small>
+                <small class="text-muted">Valor: <span id="puntosValor">200</span></small>
+                <small class="text-muted">5000</small>
+              </div>
+            </div>
+            <button class="btn btn-primary w-100" type="submit">Procesar trayectoria</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h5 class="card-title">Guia rapida</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Sube un CSV con datos GPS ordenados por tiempo.</li>
+            <li class="list-group-item">Elige el metodo de interpolacion.</li>
+            <li class="list-group-item">Descarga el CSV interpolado y visualiza el mapa.</li>
+          </ul>
+          <div class="mt-4">
+            <p class="text-muted mb-1">CSV de ejemplo:</p>
+            <a class="btn btn-outline-secondary" href="{{ url_for('static', filename='csv/ruta_gps.csv') }}" download>
+              Descargar ejemplo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="row g-4">
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h4 class="card-title">Resultados de interpolacion ({{ metodo }})</h4>
+          <div class="row text-center">
+            <div class="col-md-2">
+              <div class="stat-box">
+                <div class="stat-value">{{ puntos_originales }}</div>
+                <div class="stat-label">Puntos originales</div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="stat-box">
+                <div class="stat-value">{{ puntos_interpolados }}</div>
+                <div class="stat-label">Puntos interpolados</div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="stat-box">
+                <div class="stat-value">{{ puntos_selector }}</div>
+                <div class="stat-label">Selector usado</div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="stat-box">
+                <div class="stat-value">{{ distancia_km }}</div>
+                <div class="stat-label">Distancia (km)</div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="stat-box">
+                <div class="stat-value">{{ velocidad_media }}</div>
+                <div class="stat-label">Vel. media (km/h)</div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="stat-box">
+                <div class="stat-value">{{ velocidad_maxima }}</div>
+                <div class="stat-label">Vel. maxima (km/h)</div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-3">
+            <a class="btn btn-success" href="{{ csv_url }}">Descargar CSV interpolado</a>
+            <a class="btn btn-outline-primary" href="{{ url_for('index') }}">Nuevo archivo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h5 class="card-title">Grafica comparativa</h5>
+          <img src="{{ grafica_url }}" alt="Grafica" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h5 class="card-title">Mapa interactivo</h5>
+          <div class="map-container">
+            <iframe src="{{ mapa_url }}" class="map-frame" title="Mapa"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title">Panel de comparacion (Lineal vs Lagrange)</h5>
+          <div class="row g-4">
+            <div class="col-lg-7">
+              <img src="{{ comp_grafica_url }}" alt="Comparacion" class="img-fluid rounded">
+            </div>
+            <div class="col-lg-5">
+              <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                  <thead>
+                    <tr>
+                      <th>Metodo</th>
+                      <th>Distancia (km)</th>
+                      <th>Vel. media (km/h)</th>
+                      <th>Tiempo (ms)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Lineal</td>
+                      <td>{{ comp_lineal_dist }}</td>
+                      <td>{{ comp_lineal_vel }}</td>
+                      <td>{{ comp_lineal_time }}</td>
+                    </tr>
+                    <tr>
+                      <td>Lagrange</td>
+                      <td>{{ comp_lagrange_dist }}</td>
+                      <td>{{ comp_lagrange_vel }}</td>
+                      <td>{{ comp_lagrange_time }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="alert alert-info">
+                Diferencias visuales: Lagrange puede oscilar con muchos puntos. Lineal es estable, pero menos suave.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

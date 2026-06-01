@@ -19,19 +19,9 @@
                 <div class="stat-label">Puntos interpolados</div>
               </div>
             </div>
-            <div class="col-md-2">
-              <div class="stat-box">
-                <div class="stat-value">{{ puntos_selector }}</div>
-                <div class="stat-label">Selector usado</div>
-              </div>
-            </div>
             
-            <div class="col-md-2">
-              <div class="stat-box">
-                <div class="stat-value">{{ velocidad_maxima }}</div>
-                <div class="stat-label">Vel. maxima (km/h)</div>
-              </div>
-            </div>
+            
+            
           </div>
           <div class="text-center mt-3">
             <a class="btn btn-success" href="{{ csv_url }}">Descargar CSV interpolado</a>
@@ -64,41 +54,14 @@
     <div class="col-12">
       <div class="card shadow-sm border-0">
         <div class="card-body">
-          <h5 class="card-title">Panel de comparacion (Newton vs Lagrange)</h5>
+          <h5 class="card-title">Grafica comparativa con todos los puntos interpolados</h5>
           <div class="row g-4">
             <div class="col-lg-7">
               <img src="{{ comp_grafica_url }}" alt="Comparacion" class="img-fluid rounded">
             </div>
             <div class="col-lg-5">
-              <div class="table-responsive">
-                <table class="table table-striped align-middle">
-                  <thead>
-                    <tr>
-                      <th>Metodo</th>
-                      <th>Distancia (km)</th>
-                      <th>Vel. media (km/h)</th>
-                      <th>Tiempo (ms)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Newton</td>
-                      <td>{{ comp_lineal_dist }}</td>
-                      <td>{{ comp_lineal_vel }}</td>
-                      <td>{{ comp_lineal_time }}</td>
-                    </tr>
-                    <tr>
-                      <td>Lagrange</td>
-                      <td>{{ comp_lagrange_dist }}</td>
-                      <td>{{ comp_lagrange_vel }}</td>
-                      <td>{{ comp_lagrange_time }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="alert alert-info">
-                Diferencias visuales: Lagrange puede oscilar con muchos puntos. Newton es estable, pero menos suave.
-              </div>
+              
+             
             </div>
           </div>
         </div>

@@ -1,10 +1,13 @@
-"""Graficas comparativas de rutas GPS."""
+
 
 from __future__ import annotations
 
 from pathlib import Path
 from typing import Sequence
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
@@ -16,7 +19,7 @@ def graficar_rutas(
     ruta_salida: str | Path,
     titulo: str = "Comparacion de rutas",
 ) -> None:
-    """Genera una grafica de la ruta original e interpolada."""
+  
 
     plt.style.use("seaborn-v0_8")
     fig, ax = plt.subplots(figsize=(8, 6))

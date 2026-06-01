@@ -1,4 +1,4 @@
-"""Funciones de interpolacion para trayectoria GPS."""
+
 
 from __future__ import annotations
 

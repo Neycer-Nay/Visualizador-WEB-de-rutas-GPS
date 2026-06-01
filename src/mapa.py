@@ -1,4 +1,4 @@
-"""Generacion de mapas interactivos con folium."""
+
 
 from __future__ import annotations
 

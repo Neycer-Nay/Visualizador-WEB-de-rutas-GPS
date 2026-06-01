@@ -1,4 +1,4 @@
-"""Lectura y validacion de datos GPS desde CSV."""
+
 
 from __future__ import annotations
 

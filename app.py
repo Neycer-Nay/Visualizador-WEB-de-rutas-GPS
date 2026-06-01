@@ -143,7 +143,7 @@ def crear_app() -> Flask:
             resultado_lagrange.latitudes,
             resultado_lagrange.longitudes,
             grafica_comp_path,
-            titulo="Comparacion: Newton vs Lagrange",
+            titulo="Comparacion: total de puntos interpolados",
         )
 
         df_salida = {

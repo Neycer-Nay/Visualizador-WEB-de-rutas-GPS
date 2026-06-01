@@ -10,7 +10,7 @@ import numpy as np
 from .utilidades import convertir_tiempo_a_segundos
 
 
-MetodoInterpolacion = Literal["lineal", "lagrange"]
+MetodoInterpolacion = Literal["newton", "lagrange"]
 
 
 @dataclass(frozen=True)
@@ -22,8 +22,19 @@ class ResultadoInterpolacion:
     longitudes: np.ndarray
 
 
-def _interpolar_lineal(x: np.ndarray, y: np.ndarray, x_nuevo: np.ndarray) -> np.ndarray:
-    return np.interp(x_nuevo, x, y)
+def _interpolar_newton(x: np.ndarray, y: np.ndarray, x_nuevo: np.ndarray) -> np.ndarray:
+    n = len(x)
+    coef = y.astype(float).copy()
+    for j in range(1, n):
+        coef[j:n] = (coef[j:n] - coef[j - 1 : n - 1]) / (x[j:n] - x[0 : n - j])
+
+    y_nuevo = np.zeros_like(x_nuevo, dtype=float)
+    termino = np.ones_like(x_nuevo, dtype=float)
+    for i in range(n):
+        if i > 0:
+            termino *= x_nuevo - x[i - 1]
+        y_nuevo += coef[i] * termino
+    return y_nuevo
 
 
 def _interpolar_lagrange(x: np.ndarray, y: np.ndarray, x_nuevo: np.ndarray) -> np.ndarray:
@@ -54,9 +65,9 @@ def interpolar_ruta(
     lat = np.array(latitudes, dtype=float)
     lon = np.array(longitudes, dtype=float)
 
-    if metodo == "lineal":
-        lat_i = _interpolar_lineal(x, lat, x_nuevo)
-        lon_i = _interpolar_lineal(x, lon, x_nuevo)
+    if metodo == "newton":
+        lat_i = _interpolar_newton(x, lat, x_nuevo)
+        lon_i = _interpolar_newton(x, lon, x_nuevo)
     elif metodo == "lagrange":
         lat_i = _interpolar_lagrange(x, lat, x_nuevo)
         lon_i = _interpolar_lagrange(x, lon, x_nuevo)

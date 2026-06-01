@@ -6,7 +6,7 @@
       <div class="card shadow-sm border-0">
         <div class="card-body">
           <h5 class="card-title">Cargar archivo GPS</h5>
-          <p class="text-muted">Sube un CSV con las columnas: tiempo, latitud, longitud.</p>
+          <p class="text-muted">Sube un archivo CSV con las columnas: tiempo, latitud, longitud.</p>
           <form action="{{ url_for('procesar') }}" method="post" enctype="multipart/form-data">
             <div class="mb-3">
               <label class="form-label">Archivo CSV</label>
@@ -16,7 +16,7 @@
             <div class="mb-3">
               <label class="form-label">Metodo de interpolacion</label>
               <select class="form-select" name="metodo" required>
-                <option value="lineal">Lineal</option>
+                <option value="newton">Newton</option>
                 <option value="lagrange">Lagrange</option>
               </select>
             </div>

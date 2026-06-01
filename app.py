@@ -50,7 +50,7 @@ def crear_app() -> Flask:
             return redirect(url_for("index"))
 
         archivo = request.files["archivo"]
-        metodo = request.form.get("metodo", "lineal")
+        metodo = request.form.get("metodo", "newton")
         puntos_str = request.form.get("num_puntos", "200")
         if archivo.filename == "":
             flash("No se selecciono un archivo.", "warning")
@@ -77,15 +77,15 @@ def crear_app() -> Flask:
 
         try:
             datos = leer_datos_gps(ruta_subida)
-            inicio_lineal = datetime.now()
-            resultado_lineal = interpolar_ruta(
+            inicio_newton = datetime.now()
+            resultado_newton = interpolar_ruta(
                 datos.tiempo,
                 datos.latitud,
                 datos.longitud,
-                metodo="lineal",
+                metodo="newton",
                 num_puntos=num_puntos,
             )
-            tiempo_lineal_ms = (datetime.now() - inicio_lineal).total_seconds() * 1000
+            tiempo_newton_ms = (datetime.now() - inicio_newton).total_seconds() * 1000
 
             inicio_lagrange = datetime.now()
             resultado_lagrange = interpolar_ruta(
@@ -97,15 +97,15 @@ def crear_app() -> Flask:
             )
             tiempo_lagrange_ms = (datetime.now() - inicio_lagrange).total_seconds() * 1000
 
-            resultado = resultado_lineal if metodo == "lineal" else resultado_lagrange
+            resultado = resultado_newton if metodo == "newton" else resultado_lagrange
         except Exception as exc:
             flash(f"Error al procesar el archivo: {exc}", "danger")
             return redirect(url_for("index"))
 
         tiempos_interpolados = crear_tiempo_interpolado(datos.tiempo.iloc[0], resultado.tiempos_segundos)
         estadisticas = calcular_estadisticas(datos.tiempo, datos.latitud, datos.longitud)
-        estadisticas_lineal = calcular_estadisticas(
-            tiempos_interpolados, resultado_lineal.latitudes, resultado_lineal.longitudes
+        estadisticas_newton = calcular_estadisticas(
+            tiempos_interpolados, resultado_newton.latitudes, resultado_newton.longitudes
         )
         estadisticas_lagrange = calcular_estadisticas(
             tiempos_interpolados, resultado_lagrange.latitudes, resultado_lagrange.longitudes
@@ -138,12 +138,12 @@ def crear_app() -> Flask:
         )
 
         graficar_rutas(
-            resultado_lineal.latitudes,
-            resultado_lineal.longitudes,
+            resultado_newton.latitudes,
+            resultado_newton.longitudes,
             resultado_lagrange.latitudes,
             resultado_lagrange.longitudes,
             grafica_comp_path,
-            titulo="Comparacion: Lineal vs Lagrange",
+            titulo="Comparacion: Newton vs Lagrange",
         )
 
         df_salida = {
@@ -165,11 +165,11 @@ def crear_app() -> Flask:
             velocidad_maxima=f"{estadisticas.velocidad_maxima_kmh:.2f}",
             puntos_selector=num_puntos,
             comp_grafica_url=url_for("static", filename=f"graficas/{grafica_comp_nombre}"),
-            comp_lineal_dist=f"{estadisticas_lineal.distancia_total_km:.3f}",
+            comp_lineal_dist=f"{estadisticas_newton.distancia_total_km:.3f}",
             comp_lagrange_dist=f"{estadisticas_lagrange.distancia_total_km:.3f}",
-            comp_lineal_vel=f"{estadisticas_lineal.velocidad_media_kmh:.2f}",
+            comp_lineal_vel=f"{estadisticas_newton.velocidad_media_kmh:.2f}",
             comp_lagrange_vel=f"{estadisticas_lagrange.velocidad_media_kmh:.2f}",
-            comp_lineal_time=f"{tiempo_lineal_ms:.2f}",
+            comp_lineal_time=f"{tiempo_newton_ms:.2f}",
             comp_lagrange_time=f"{tiempo_lagrange_ms:.2f}",
             grafica_url=url_for("static", filename=f"graficas/{grafica_nombre}"),
             mapa_url=url_for("static", filename=f"mapas/{mapa_nombre}"),

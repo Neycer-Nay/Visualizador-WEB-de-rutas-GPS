@@ -25,18 +25,7 @@
                 <div class="stat-label">Selector usado</div>
               </div>
             </div>
-            <div class="col-md-2">
-              <div class="stat-box">
-                <div class="stat-value">{{ distancia_km }}</div>
-                <div class="stat-label">Distancia (km)</div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="stat-box">
-                <div class="stat-value">{{ velocidad_media }}</div>
-                <div class="stat-label">Vel. media (km/h)</div>
-              </div>
-            </div>
+            
             <div class="col-md-2">
               <div class="stat-box">
                 <div class="stat-value">{{ velocidad_maxima }}</div>
@@ -75,7 +64,7 @@
     <div class="col-12">
       <div class="card shadow-sm border-0">
         <div class="card-body">
-          <h5 class="card-title">Panel de comparacion (Lineal vs Lagrange)</h5>
+          <h5 class="card-title">Panel de comparacion (Newton vs Lagrange)</h5>
           <div class="row g-4">
             <div class="col-lg-7">
               <img src="{{ comp_grafica_url }}" alt="Comparacion" class="img-fluid rounded">
@@ -93,7 +82,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>Lineal</td>
+                      <td>Newton</td>
                       <td>{{ comp_lineal_dist }}</td>
                       <td>{{ comp_lineal_vel }}</td>
                       <td>{{ comp_lineal_time }}</td>
@@ -108,7 +97,7 @@
                 </table>
               </div>
               <div class="alert alert-info">
-                Diferencias visuales: Lagrange puede oscilar con muchos puntos. Lineal es estable, pero menos suave.
+                Diferencias visuales: Lagrange puede oscilar con muchos puntos. Newton es estable, pero menos suave.
               </div>
             </div>
           </div>
